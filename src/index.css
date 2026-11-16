@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-white: #FFFFFF;
+    --color-light-yellow: #FFF4CC;
+    --color-black: #111111;
+    --color-gold: #E8C547;
+  }
+
+  body {
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #FFFFFF;
+    color: #111111;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: "Playfair Display", Georgia, serif;
+  }
+}
+
+.flip-card-inner {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .flip-card-inner {
+    transition: none;
+  }
+}
