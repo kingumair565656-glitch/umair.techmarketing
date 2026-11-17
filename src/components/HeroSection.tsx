@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { ArrowRight, Trash2, Camera } from 'lucide-react';
+import { ArrowRight, Camera, Trash2 } from 'lucide-react';
 import { BRAND_INFO } from '../data/siteContent';
 import { compressImageFile } from '../types/portfolio';
 import { PageId } from './Header';
@@ -50,6 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   const handleFile = async (file: File) => {
+    if (profilePhoto) return;
     if (!file.type.startsWith('image/')) {
       setUploadError('Please select a valid JPG, PNG, or WebP photograph.');
       return;
@@ -75,6 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
+    if (profilePhoto) return;
     const file = e.dataTransfer.files?.[0];
     if (file) {
       handleFile(file);
@@ -110,12 +112,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 flex flex-col items-start"
           >
-            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-semibold text-[#111111]/80 mb-4">
-              <span>{BRAND_INFO.brandName}</span>
-              <span aria-hidden="true" className="text-[#E8C547]">
-                ·
-              </span>
-              <span>{BRAND_INFO.professionalTitle}</span>
+            <div className="mb-4">
+              <p className="font-display text-xl sm:text-2xl font-bold tracking-tight text-[#111111] flex items-center gap-3">
+                <span>{BRAND_INFO.portfolioHeading}</span>
+                <span
+                  aria-hidden="true"
+                  className="inline-block w-10 h-0.5 bg-[#E8C547] rounded-full"
+                />
+              </p>
+              <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs sm:text-sm font-semibold text-[#111111]/75">
+                <span>{BRAND_INFO.brandName}</span>
+                <span aria-hidden="true" className="text-[#E8C547]">
+                  ·
+                </span>
+                <span>{BRAND_INFO.professionalTitle}</span>
+              </div>
             </div>
 
             <h1 className="font-display text-[2.1rem] sm:text-[2.75rem] lg:text-[3.15rem] font-bold leading-[1.15] tracking-tight text-[#111111] [text-wrap:balance] mb-5">
@@ -181,7 +192,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </motion.div>
 
-          {/* Right Column (~45%): Classic Framed Hero Picture with subtle mouse tilt */}
+          {/* Right Column (~45%): Main Home Picture with one-time upload & remove option */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -193,6 +204,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
               onDragOver={(e) => {
+                if (profilePhoto) return;
                 e.preventDefault();
                 setIsDragging(true);
               }}
@@ -203,14 +215,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 isDragging ? 'border-[#111111]' : 'border-[#E8C547]'
               } shadow-[0_18px_40px_-15px_rgba(17,17,17,0.18)]`}
             >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="sr-only"
-                aria-label="Upload Muhammad Umair professional photograph"
-              />
+              {!profilePhoto && (
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="sr-only"
+                  aria-label="Upload Muhammad Umair main home photograph"
+                />
+              )}
 
               <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white border border-[#111111]/10 group">
                 {!imgFailed ? (
@@ -247,29 +261,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       {BRAND_INFO.professionalTitle}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  {!profilePhoto ? (
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#111111] bg-[#E8C547] hover:bg-[#FFF4CC] rounded-md transition-colors cursor-pointer whitespace-nowrap"
                     >
                       <Camera className="w-3.5 h-3.5" />
-                      <span>{profilePhoto ? 'Change Photo' : 'Upload Photo'}</span>
+                      <span>Upload Photo</span>
                     </button>
-                    {profilePhoto && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setImgFailed(false);
-                          onUpdateProfilePhoto(null);
-                        }}
-                        aria-label="Reset to studio workspace picture"
-                        className="inline-flex items-center justify-center w-8 h-8 text-white bg-[#111111]/75 hover:bg-[#111111] rounded-md transition-colors cursor-pointer"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImgFailed(false);
+                        setUploadError(null);
+                        onUpdateProfilePhoto(null);
+                      }}
+                      aria-label="Remove uploaded picture"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#111111]/80 hover:bg-red-600 rounded-md transition-colors cursor-pointer whitespace-nowrap"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Remove</span>
+                    </button>
+                  )}
                 </div>
               </div>
 

@@ -8,6 +8,7 @@ import { MotionConfig, AnimatePresence, motion } from 'motion/react';
 import { ChevronRight } from 'lucide-react';
 import { ClassicCursor } from './components/ClassicCursor';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
+import { WhatsAppFloat } from './components/WhatsAppFloat';
 import { Header, PageId } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { ServicesSection } from './components/ServicesSection';
@@ -23,14 +24,12 @@ import {
   ServicePricingMap,
 } from './data/siteContent';
 import {
-  ProjectItem,
   ServiceCategory,
   TestimonialItem,
 } from './types/portfolio';
 
 const STORAGE_KEYS = {
   profilePhoto: 'umairtech_profile_photo_v1',
-  projects: 'umairtech_projects_v1',
   testimonials: 'umairtech_testimonials_v1',
   pricing: 'umairtech_pricing_v1',
 };
@@ -54,7 +53,7 @@ const PAGE_TITLES: Record<Exclude<PageId, 'home'>, { title: string; subtitle: st
     subtitle: 'Clear, transparent packages across all three of my core digital marketing and web design services.',
   },
   projects: {
-    title: 'Completed Projects',
+    title: 'My Portfolio',
     subtitle: 'Browse actual completed client work across Meta Ads Management, Website Design, and Social Media Marketing.',
   },
   about: {
@@ -96,10 +95,6 @@ export default function App() {
     }
   });
 
-  const [projects, setProjects] = useState<ProjectItem[]>(() =>
-    loadFromStorage<ProjectItem[]>(STORAGE_KEYS.projects, [])
-  );
-
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>(() =>
     loadFromStorage<TestimonialItem[]>(STORAGE_KEYS.testimonials, [])
   );
@@ -139,14 +134,6 @@ export default function App() {
       // Ignore storage quota errors cleanly
     }
   }, [profilePhoto]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.projects, JSON.stringify(projects));
-    } catch {
-      // Ignore storage quota errors cleanly
-    }
-  }, [projects]);
 
   useEffect(() => {
     try {
@@ -204,27 +191,6 @@ export default function App() {
     },
     [handleNavigatePage]
   );
-
-  const handleAddProject = (
-    project: Omit<ProjectItem, 'id' | 'createdAt'>
-  ) => {
-    const newItem: ProjectItem = {
-      ...project,
-      id: `proj_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-      createdAt: Date.now(),
-    };
-    setProjects((prev) => [newItem, ...prev]);
-  };
-
-  const handleUpdateProject = (updated: ProjectItem) => {
-    setProjects((prev) =>
-      prev.map((item) => (item.id === updated.id ? updated : item))
-    );
-  };
-
-  const handleDeleteProject = (id: string) => {
-    setProjects((prev) => prev.filter((item) => item.id !== id));
-  };
 
   const handleAddTestimonial = (item: Omit<TestimonialItem, 'id'>) => {
     const newTestimonial: TestimonialItem = {
@@ -307,12 +273,7 @@ export default function App() {
 
             <StrategicApproachSection />
 
-            <ProjectsSection
-              projects={projects}
-              onAddProject={handleAddProject}
-              onUpdateProject={handleUpdateProject}
-              onDeleteProject={handleDeleteProject}
-            />
+            <ProjectsSection />
 
             <TestimonialsSection
               testimonials={testimonials}
@@ -351,14 +312,7 @@ export default function App() {
         )}
 
         {/* PROJECTS PAGE */}
-        {currentPage === 'projects' && (
-          <ProjectsSection
-            projects={projects}
-            onAddProject={handleAddProject}
-            onUpdateProject={handleUpdateProject}
-            onDeleteProject={handleDeleteProject}
-          />
-        )}
+        {currentPage === 'projects' && <ProjectsSection />}
 
         {/* ABOUT PAGE */}
         {currentPage === 'about' && (
@@ -386,6 +340,7 @@ export default function App() {
         </main>
 
         <Footer onNavigatePage={handleNavigatePage} />
+        <WhatsAppFloat />
       </div>
     </MotionConfig>
   );

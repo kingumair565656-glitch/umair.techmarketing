@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Copy, Check, Send, X } from 'lucide-react';
 import { BRAND_INFO } from '../data/siteContent';
 import { ServiceCategory } from '../types/portfolio';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface ContactSectionProps {
   preselectedService: ServiceCategory;
@@ -27,6 +28,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedWhatsapp, setCopiedWhatsapp] = useState(false);
 
   useEffect(() => {
     setService(preselectedService);
@@ -37,6 +39,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       await navigator.clipboard.writeText(BRAND_INFO.email);
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2500);
+    } catch {
+      // Fallback ignored if clipboard blocked
+    }
+  };
+
+  const handleCopyWhatsapp = async () => {
+    try {
+      await navigator.clipboard.writeText(BRAND_INFO.whatsappDisplay);
+      setCopiedWhatsapp(true);
+      setTimeout(() => setCopiedWhatsapp(false), 2500);
     } catch {
       // Fallback ignored if clipboard blocked
     }
@@ -109,6 +121,40 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
               <div className="pt-4 border-t border-[#111111]/10">
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#666666] mb-2">
+                  WhatsApp
+                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={BRAND_INFO.whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#111111] hover:underline tabular-nums"
+                  >
+                    <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+                    <span>{BRAND_INFO.whatsappDisplay}</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyWhatsapp}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold bg-[#FFF4CC] hover:bg-[#E8C547] text-[#111111] rounded-md transition-colors cursor-pointer"
+                  >
+                    {copiedWhatsapp ? (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-[#111111]/10">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#666666] mb-2">
                   Direct Email
                 </p>
                 <div className="flex flex-wrap items-center gap-2">
@@ -156,6 +202,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     Thank you, {name}. Your {service} inquiry has been prepared for {BRAND_INFO.ownerName}. You can also launch your email client directly below.
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-3">
+                    <a
+                      href={`${BRAND_INFO.whatsappHref}?text=${encodeURIComponent(
+                        `Assalam-o-Alaikum, I'm ${name}. Interested in ${service}${packageLine}. ${message}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-[#25D366] hover:bg-[#111111] hover:text-[#E8C547] rounded-lg transition-colors"
+                    >
+                      <WhatsAppIcon className="w-4 h-4" />
+                      <span>Send via WhatsApp</span>
+                    </a>
                     <a
                       href={mailtoHref}
                       className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-[#111111] bg-[#E8C547] hover:bg-[#111111] hover:text-white rounded-lg transition-colors"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUp, Mail, Check } from 'lucide-react';
 import { BRAND_INFO, NAV_LINKS } from '../data/siteContent';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 import { PageId } from './Header';
 
@@ -108,6 +109,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigatePage }) => {
             </h3>
             <div className="space-y-3 text-sm text-white/75">
               <p className="font-semibold text-white">{BRAND_INFO.ownerName}</p>
+              <a
+                href={BRAND_INFO.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-white/85 hover:text-[#E8C547] transition-colors tabular-nums"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366] shrink-0" />
+                <span>{BRAND_INFO.whatsappDisplay}</span>
+              </a>
               <a
                 href={`mailto:${BRAND_INFO.email}`}
                 className="inline-flex items-center gap-2 text-white/80 hover:text-[#E8C547] transition-colors break-all"

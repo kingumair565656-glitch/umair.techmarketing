@@ -18,8 +18,11 @@ export interface ProcessStep {
 export const BRAND_INFO = {
   brandName: 'UmairTech',
   ownerName: 'Muhammad Umair',
+  portfolioHeading: 'Muhammad Umair Portfolio',
   professionalTitle: 'Digital Marketer and Creative Specialist',
   email: 'kingumair565656@gmail.com',
+  whatsappDisplay: '03703666840',
+  whatsappHref: 'https://wa.me/923703666840',
   heroHeadline:
     'Helping Businesses Grow Through Digital Marketing and Creative Solutions.',
   heroDescription:
