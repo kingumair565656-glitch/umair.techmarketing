@@ -199,15 +199,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     return (
                       <motion.div
                         key={tier.id}
-                        initial={{ opacity: 0, y: 18 }}
+                        initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.12 }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{
-                          duration: 0.38,
-                          delay: idx * 0.07,
+                          duration: 0.18,
+                          delay: idx * 0.03,
                           ease: [0.16, 1, 0.3, 1],
                         }}
-                        whileHover={{ y: -4 }}
+                        whileHover={{ y: -3 }}
                         className={`rounded-2xl p-7 sm:p-8 flex flex-col justify-between transition-colors duration-200 border ${
                           isFeatured
                             ? 'bg-[#111111] text-white border-[#111111] shadow-[0_18px_36px_-14px_rgba(17,17,17,0.32)]'
@@ -352,7 +352,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="edit-pricing-title"
-          className="fixed inset-0 z-50 bg-[#111111]/60 backdrop-blur-xs flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-[#111111]/70 flex items-center justify-center p-4"
         >
           <div className="w-full max-w-lg rounded-2xl bg-white border border-[#111111]/12 shadow-2xl overflow-hidden">
             <div className="px-6 py-4 bg-[#111111] text-white flex items-center justify-between">

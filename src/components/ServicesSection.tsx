@@ -37,17 +37,21 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
               return (
                 <motion.div
                   key={service.id}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.12 }}
+                  viewport={{ once: true, amount: 0.05 }}
                   transition={{
-                    duration: 0.4,
-                    delay: index * 0.08,
+                    duration: 0.2,
+                    delay: index * 0.03,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  whileHover={{ y: -4 }}
-                  onMouseEnter={() => setActiveCardId(service.id)}
-                  onMouseLeave={() => setActiveCardId(null)}
+                  whileHover={{ y: -3 }}
+                  onPointerEnter={(e) => {
+                    if (e.pointerType === 'mouse') setActiveCardId(service.id);
+                  }}
+                  onPointerLeave={(e) => {
+                    if (e.pointerType === 'mouse') setActiveCardId(null);
+                  }}
                   className={`group relative rounded-xl border border-[#111111]/10 transition-colors duration-200 overflow-hidden ${
                     isThirdSpan ? 'sm:col-span-2' : ''
                   } ${
@@ -159,10 +163,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
           {/* Right Column (5 of 12 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 lg:pl-4"
           >
             <p className="text-xs font-semibold uppercase tracking-wider text-[#111111]/70 mb-2">

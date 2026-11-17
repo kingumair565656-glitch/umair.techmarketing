@@ -70,10 +70,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column (50% -> 6 cols): Editorial Visual Card */}
           <motion.div
-            initial={{ opacity: 0, x: -16 }}
+            initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6"
           >
             <div className="relative rounded-2xl bg-[#FFF4CC] p-8 sm:p-10 border border-[#E8C547]/60">
@@ -104,10 +104,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
 
           {/* Right Column (50% -> 6 cols): "Customers Feedback / What Our Customers Say!" */}
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6"
           >
             <p className="text-xs font-semibold uppercase tracking-wider text-[#111111]/70 mb-2">
@@ -222,7 +222,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="feedback-modal-title"
-          className="fixed inset-0 z-50 bg-[#111111]/60 backdrop-blur-xs flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-[#111111]/70 flex items-center justify-center p-4"
         >
           <div className="w-full max-w-md rounded-2xl bg-white border border-[#111111]/12 shadow-2xl overflow-hidden">
             <div className="px-6 py-4 bg-[#111111] text-white flex items-center justify-between">

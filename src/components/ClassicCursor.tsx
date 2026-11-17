@@ -10,25 +10,25 @@ export const ClassicCursor: React.FC = () => {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const ringX = useSpring(mouseX, { stiffness: 320, damping: 28, mass: 0.45 });
-  const ringY = useSpring(mouseY, { stiffness: 320, damping: 28, mass: 0.45 });
+  const ringX = useSpring(mouseX, { stiffness: 420, damping: 30, mass: 0.35 });
+  const ringY = useSpring(mouseY, { stiffness: 420, damping: 30, mass: 0.35 });
 
-  const dotX = useSpring(mouseX, { stiffness: 900, damping: 42, mass: 0.2 });
-  const dotY = useSpring(mouseY, { stiffness: 900, damping: 42, mass: 0.2 });
+  const dotX = useSpring(mouseX, { stiffness: 1000, damping: 42, mass: 0.15 });
+  const dotY = useSpring(mouseY, { stiffness: 1000, damping: 42, mass: 0.15 });
 
   useEffect(() => {
-    const finePointer = window.matchMedia('(pointer: fine)');
+    const fineHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const evaluate = () => {
-      setEnabled(finePointer.matches && !reducedMotion.matches);
+      setEnabled(fineHoverPointer.matches && !reducedMotion.matches);
     };
     evaluate();
 
-    finePointer.addEventListener('change', evaluate);
+    fineHoverPointer.addEventListener('change', evaluate);
     reducedMotion.addEventListener('change', evaluate);
     return () => {
-      finePointer.removeEventListener('change', evaluate);
+      fineHoverPointer.removeEventListener('change', evaluate);
       reducedMotion.removeEventListener('change', evaluate);
     };
   }, []);
@@ -36,7 +36,11 @@ export const ClassicCursor: React.FC = () => {
   useEffect(() => {
     if (!enabled) return;
 
-    const handleMove = (e: MouseEvent) => {
+    const handleMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') {
+        setVisible(false);
+        return;
+      }
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       setVisible(true);
@@ -49,22 +53,21 @@ export const ClassicCursor: React.FC = () => {
     };
 
     const handleLeave = () => setVisible(false);
-    const handleEnter = () => setVisible(true);
-    const handleDown = () => setClicking(true);
+    const handleDown = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') setClicking(true);
+    };
     const handleUp = () => setClicking(false);
 
-    window.addEventListener('mousemove', handleMove, { passive: true });
+    window.addEventListener('pointermove', handleMove, { passive: true });
     document.addEventListener('mouseleave', handleLeave);
-    document.addEventListener('mouseenter', handleEnter);
-    window.addEventListener('mousedown', handleDown);
-    window.addEventListener('mouseup', handleUp);
+    window.addEventListener('pointerdown', handleDown, { passive: true });
+    window.addEventListener('pointerup', handleUp, { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('pointermove', handleMove);
       document.removeEventListener('mouseleave', handleLeave);
-      document.removeEventListener('mouseenter', handleEnter);
-      window.removeEventListener('mousedown', handleDown);
-      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('pointerdown', handleDown);
+      window.removeEventListener('pointerup', handleUp);
     };
   }, [enabled, mouseX, mouseY]);
 
@@ -75,7 +78,6 @@ export const ClassicCursor: React.FC = () => {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden"
     >
-      {/* Classic Gold Outer Ring */}
       <motion.div
         style={{
           x: ringX,
@@ -84,17 +86,16 @@ export const ClassicCursor: React.FC = () => {
           translateY: '-50%',
         }}
         animate={{
-          scale: clicking ? 0.82 : hoveringInteractive ? 1.55 : 1,
+          scale: clicking ? 0.82 : hoveringInteractive ? 1.5 : 1,
           borderColor: hoveringInteractive ? '#111111' : '#E8C547',
           backgroundColor: hoveringInteractive
             ? 'rgba(232, 197, 71, 0.16)'
             : 'rgba(232, 197, 71, 0)',
         }}
-        transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 w-9 h-9 rounded-full border-[1.75px]"
+        transition={{ duration: 0.12, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 w-9 h-9 rounded-full border-[1.75px] will-change-transform"
       />
 
-      {/* Precision Center Dot */}
       <motion.div
         style={{
           x: dotX,
@@ -103,11 +104,11 @@ export const ClassicCursor: React.FC = () => {
           translateY: '-50%',
         }}
         animate={{
-          scale: clicking ? 1.4 : hoveringInteractive ? 0.65 : 1,
+          scale: clicking ? 1.35 : hoveringInteractive ? 0.65 : 1,
           backgroundColor: hoveringInteractive ? '#E8C547' : '#111111',
         }}
-        transition={{ duration: 0.12 }}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full ring-1 ring-[#E8C547]/70"
+        transition={{ duration: 0.08 }}
+        className="fixed top-0 left-0 w-2 h-2 rounded-full ring-1 ring-[#E8C547]/70 will-change-transform"
       />
     </div>
   );

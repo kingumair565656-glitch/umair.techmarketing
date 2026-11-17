@@ -29,10 +29,10 @@ export const StrategicApproachSection: React.FC = () => {
           {/* Left Column */}
           <div className="lg:col-span-7">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.05 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <p className="text-xs font-semibold uppercase tracking-wider text-[#111111]/70 mb-2">
                 Simple Steps to Success
@@ -55,15 +55,15 @@ export const StrategicApproachSection: React.FC = () => {
                   <motion.button
                     key={step.stepNumber}
                     type="button"
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.12 }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{
-                      duration: 0.38,
-                      delay: idx * 0.06,
+                      duration: 0.18,
+                      delay: idx * 0.03,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    whileHover={{ y: -3 }}
+                    whileHover={{ y: -2 }}
                     onClick={() => setOpenIndex(idx)}
                     className={`text-left rounded-xl p-6 border transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#111111] ${
                       isSelected
@@ -100,10 +100,10 @@ export const StrategicApproachSection: React.FC = () => {
 
           {/* Right Column: Visual Workflow Card + Interactive Accordion */}
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex flex-col gap-5"
           >
             <div className="rounded-xl bg-[#111111] text-white p-6 sm:p-7 border border-[#111111]">

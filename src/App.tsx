@@ -163,7 +163,7 @@ export default function App() {
     if (window.location.hash !== targetHash) {
       window.location.hash = targetHash;
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
   const handleSelectServiceForContact = useCallback(
@@ -214,13 +214,12 @@ export default function App() {
         <Header currentPage={currentPage} onNavigatePage={handleNavigatePage} />
 
         <main className="relative z-10 flex-1">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync" initial={false}>
             <motion.div
               key={currentPage}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
             >
         {/* Inner Page Header Banner (matches onlinekrlo.pk inner pages when not on Home) */}
         {pageMeta && (

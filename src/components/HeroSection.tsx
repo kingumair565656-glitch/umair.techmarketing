@@ -36,7 +36,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     damping: 20,
   });
 
-  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
     const rect = e.currentTarget.getBoundingClientRect();
     const nx = (e.clientX - rect.left) / rect.width - 0.5;
     const ny = (e.clientY - rect.top) / rect.height - 0.5;
@@ -107,9 +108,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column (~55%): Headline, Description, CTAs & Specialty Strip */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 flex flex-col items-start"
           >
             <div className="mb-4">
@@ -194,15 +195,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Right Column (~45%): Main Home Picture with one-time upload & remove option */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            initial={{ opacity: 0, scale: 0.98, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.24, delay: 0.04, ease: [0.16, 1, 0.3, 1] }}
             style={{ perspective: 900 }}
             className="lg:col-span-5"
           >
             <motion.div
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
+              onPointerMove={handleCardPointerMove}
+              onPointerLeave={handleCardMouseLeave}
               onDragOver={(e) => {
                 if (profilePhoto) return;
                 e.preventDefault();
@@ -235,6 +236,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         ? 'Muhammad Umair — Digital Marketer and Creative Specialist'
                         : 'UmairTech creative workspace for Meta Ads, Website Design, and Social Media Marketing'
                     }
+                    loading="eager"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     onError={() => setImgFailed(true)}
                     className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${

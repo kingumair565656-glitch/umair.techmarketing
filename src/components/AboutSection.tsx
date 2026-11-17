@@ -32,10 +32,10 @@ export const AboutSection: React.FC = () => {
 
       <div className="relative z-10 mx-auto max-w-[1140px] px-5 sm:px-8 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="text-xs font-semibold uppercase tracking-wider text-[#E8C547] mb-2">
             About {BRAND_INFO.brandName}
@@ -55,15 +55,15 @@ export const AboutSection: React.FC = () => {
           {ABOUT_PILLARS.map((pillar, idx) => (
             <motion.div
               key={pillar.index}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{
-                duration: 0.4,
-                delay: idx * 0.08,
+                duration: 0.2,
+                delay: idx * 0.03,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -3 }}
               className="rounded-xl bg-white/[0.04] border border-white/12 p-7 hover:border-[#E8C547]/70 transition-colors"
             >
               <div className="font-display text-2xl font-bold text-[#E8C547] mb-3 tabular-nums">

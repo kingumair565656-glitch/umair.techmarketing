@@ -61,10 +61,10 @@ export const ProjectsSection: React.FC = () => {
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
         {/* Section Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
           <p className="font-display text-lg sm:text-xl font-bold text-[#111111]/85 tracking-tight mb-1.5">
@@ -115,15 +115,15 @@ export const ProjectsSection: React.FC = () => {
             return (
               <motion.article
                 key={cat}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.12 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{
-                  duration: 0.4,
-                  delay: idx * 0.08,
+                  duration: 0.2,
+                  delay: idx * 0.03,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -3 }}
                 className="group rounded-xl bg-white border border-[#111111]/10 overflow-hidden shadow-[0_6px_20px_-10px_rgba(17,17,17,0.1)] hover:border-[#E8C547] transition-colors flex flex-col justify-between"
               >
                 <div>
@@ -131,6 +131,8 @@ export const ProjectsSection: React.FC = () => {
                     <img
                       src={showcase.imageUrl}
                       alt={`${showcase.title} — ${cat}`}
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                     />
@@ -179,18 +181,18 @@ export const ProjectsSection: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: 0.12 }}
             role="dialog"
             aria-modal="true"
             aria-labelledby="preview-project-title"
-            className="fixed inset-0 z-50 bg-[#111111]/80 backdrop-blur-xs flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-[#111111]/80 flex items-center justify-center p-4"
             onClick={() => setPreviewItem(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 10 }}
+              initial={{ opacity: 0, scale: 0.97, y: 6 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, scale: 0.97, y: 6 }}
+              transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
               className="w-full max-w-3xl rounded-2xl bg-white overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
